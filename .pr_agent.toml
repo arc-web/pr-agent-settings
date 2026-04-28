@@ -1,0 +1,31 @@
+[config]
+response_language = "en-US"
+verbosity_level = 2
+
+[github_action_config]
+auto_review = true
+auto_describe = false
+auto_improve = false
+pr_actions = ["opened", "reopened", "ready_for_review", "synchronize"]
+
+[pr_reviewer]
+require_score_review = false
+require_tests_review = true
+require_estimate_effort_to_review = false
+extra_instructions = """\
+Review as an AI-code damage control gate. Prioritize correctness, data safety, deploy risk, and overwrite risk over style.
+
+Flag these issues clearly when present:
+- Files copied instead of renamed or migrated.
+- Stale references to old paths, especially aimacpro, aimacmini, or pre-migration locations.
+- Duplicate files that now diverge and could overwrite newer work.
+- Deleted or bypassed business logic, auth checks, routing rules, deployment config, or persistence code.
+- Broad generated rewrites that change unrelated behavior.
+- Missing verification for user-facing workflows, APIs, migrations, and deploy config.
+
+Keep comments concise and actionable. Do not block on formatting-only concerns unless they hide a correctness issue.
+"""
+
+[pr_code_suggestions]
+num_code_suggestions = 4
+suggestions_score_threshold = 8
